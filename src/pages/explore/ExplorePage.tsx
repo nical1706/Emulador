@@ -1,17 +1,52 @@
+import { ExploreFiltersPanel } from "./components/ExploreFiltersPanel";
+import { ExploreHeroSection } from "./components/ExploreHeroSection";
+import { ExploreRecommendationsSection } from "./components/ExploreRecommendationsSection";
+import { externalGames, type ExternalSource } from "./data/externalGames";
+import { useMemo, useState } from "react";
+
 export function ExplorePage() {
+  const [query, setQuery] = useState("");
+  const [activeSource, setActiveSource] = useState<ExternalSource>("Todas");
+
+  const filteredGames = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+
+    return externalGames.filter((game) => {
+      const matchesSource =
+        activeSource === "Todas" || game.source === activeSource;
+      const matchesQuery =
+        normalizedQuery.length === 0 ||
+        [
+          game.title,
+          game.source,
+          game.platform,
+          game.genre,
+          game.availability,
+          game.summary,
+        ].some((value) => value.toLowerCase().includes(normalizedQuery));
+
+      return matchesSource && matchesQuery;
+    });
+  }, [activeSource, query]);
+
   return (
-    <section className="flex h-full min-h-60 items-center justify-center rounded-2xl bg-slate-900 p-8 text-center text-slate-200">
-      <div className="space-y-2">
-        <p className="text-sm font-bold tracking-[0.3em] text-slate-400 uppercase">
-          Explorar
-        </p>
-        <h1 className="text-3xl font-bold text-white">
-          Descubre nuevo contenido
-        </h1>
-        <p className="text-slate-400">
-          Esta página queda preparada para filtros, géneros y recomendaciones.
-        </p>
+    <div className="flex w-full flex-col gap-4">
+      <ExploreHeroSection
+        query={query}
+        resultCount={filteredGames.length}
+        onQueryChange={setQuery}
+      />
+
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1.15fr)_minmax(280px,0.85fr)]">
+        <ExploreRecommendationsSection
+          games={filteredGames}
+          activeSource={activeSource}
+        />
+        <ExploreFiltersPanel
+          activeSource={activeSource}
+          onSourceChange={setActiveSource}
+        />
       </div>
-    </section>
+    </div>
   );
 }

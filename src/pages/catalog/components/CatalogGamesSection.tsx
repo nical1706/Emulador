@@ -4,7 +4,7 @@ import { Gamepad2 } from "lucide-react";
 
 export function CatalogGamesSection() {
   return (
-    <section className="rounded-2flex xl f flex flex-col gap-4 rounded-2xl border-2 border-slate-800 bg-slate-900 p-4">
+    <section className="flex flex-col gap-4 rounded-2xl border-2 border-slate-800 bg-slate-900 p-4">
       <div className="flex justify-between gap-4">
         <div className="flex flex-1 gap-1">
           <div className="aspect-square text-slate-400">
