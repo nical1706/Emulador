@@ -26,9 +26,9 @@ export function CatalogGamesSection() {
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-4 gap-4">
         {catalogGames.map((game) => (
-          <GameCard key={game.id} game={game} />
+          <GameCard key={game.id} game={game} topLeftBadge={game.system} />
         ))}
       </div>
     </section>

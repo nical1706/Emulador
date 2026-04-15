@@ -1,12 +1,43 @@
 import { ChevronLeft } from "lucide-react";
-import { Link, useParams } from "react-router";
-import { catalogGames } from "../catalog/data/catalogGames";
+import { Link, useLocation, useParams } from "react-router";
+import { catalogGames, type CatalogGame } from "../catalog/data/catalogGames";
+import { externalGames } from "../explore/data/externalGames";
 import { GameDetailsSection } from "./components/GameDetailsSection";
 import { GameOverviewSection } from "./components/GameOverviewSection";
 
+function mapExternalToCatalogGame(gameId: string | undefined): CatalogGame | undefined {
+  if (!gameId) {
+    return undefined;
+  }
+
+  const externalGame = externalGames.find((item) => item.id === gameId);
+
+  if (!externalGame) {
+    return undefined;
+  }
+
+  return {
+    id: externalGame.id,
+    title: externalGame.title,
+    system: externalGame.source,
+    genre: externalGame.genre,
+    year: externalGame.year,
+    players: "1 jugador",
+    accentClassName: externalGame.accentClassName,
+    description: "",
+    installStatus: "not-installed",
+  };
+}
+
 export function GamePage() {
   const { gameId } = useParams();
-  const game = catalogGames.find((item) => item.id === gameId);
+  const { pathname } = useLocation();
+  const isExploreGame = pathname.startsWith("/explore/");
+  const game =
+    catalogGames.find((item) => item.id === gameId) ??
+    mapExternalToCatalogGame(gameId);
+  const backPath = isExploreGame ? "/explore" : "/catalog";
+  const backLabel = isExploreGame ? "Volver a explorar" : "Volver al catálogo";
 
   if (!game) {
     return (
@@ -17,11 +48,11 @@ export function GamePage() {
           </p>
           <h1 className="text-3xl font-bold text-white">Juego no disponible</h1>
           <Link
-            to="/catalog"
+            to={backPath}
             className="inline-flex items-center gap-1 rounded-full bg-slate-700 px-4 py-2 text-sm font-semibold text-sky-100 outline-offset-4 focus:outline-2 focus:outline-amber-400"
           >
             <ChevronLeft size={16} />
-            Volver al catálogo
+            {backLabel}
           </Link>
         </div>
       </section>
@@ -31,11 +62,11 @@ export function GamePage() {
   return (
     <div className="flex h-full min-h-0 w-full flex-col gap-3">
       <Link
-        to="/catalog"
+        to={backPath}
         className="inline-flex self-start items-center gap-1 text-sm font-semibold text-slate-300 outline-offset-4 focus:outline-2 focus:outline-amber-400"
       >
         <ChevronLeft size={16} />
-        Volver al catálogo
+        {backLabel}
       </Link>
 
       <div className="grid min-h-0 flex-1 gap-3 lg:grid-cols-[minmax(0,1.45fr)_minmax(280px,0.75fr)]">

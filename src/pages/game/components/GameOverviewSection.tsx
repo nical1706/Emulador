@@ -23,9 +23,11 @@ export function GameOverviewSection({ game }: Props) {
           <p className="mt-1 text-[11px] font-semibold tracking-widest text-slate-500 uppercase">
             {game.installStatus === "installed" ? "INSTALADO" : "NO INSTALADO"}
           </p>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-300">
-            {game.description}
-          </p>
+          {game.description ? (
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-slate-300">
+              {game.description}
+            </p>
+          ) : null}
 
           <GameActions installStatus={game.installStatus} />
         </div>

@@ -1,6 +1,6 @@
 import { Globe2, SearchX } from "lucide-react";
 import type { ExternalGame, ExternalSource } from "../data/externalGames";
-import { ExploreRecommendationCard } from "./ExploreRecommendationCard";
+import { GameCard } from "../../catalog/components/GameCard";
 
 type Props = {
   games: ExternalGame[];
@@ -35,8 +35,13 @@ export function ExploreRecommendationsSection({ games, activeSource }: Props) {
 
       {games.length > 0 ? (
         <div className="mt-4 grid gap-3 md:grid-cols-4">
-          {games.map((game, index) => (
-            <ExploreRecommendationCard key={game.id} game={game} rank={index + 1} />
+          {games.map((game) => (
+            <GameCard
+              key={game.id}
+              game={game}
+              to={`/explore/${game.id}`}
+              topLeftBadge={game.source}
+            />
           ))}
         </div>
       ) : (

@@ -21,8 +21,8 @@ export function ExplorePage() {
           game.source,
           game.platform,
           game.genre,
-          game.availability,
-          game.summary,
+          game.downloadLabel,
+          String(game.year),
         ].some((value) => value.toLowerCase().includes(normalizedQuery));
 
       return matchesSource && matchesQuery;

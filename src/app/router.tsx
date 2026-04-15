@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import { CatalogPage } from "../pages/catalog";
 import { ExplorePage } from "../pages/explore";
 import { GamePage } from "../pages/game";
-import { SettingsPage } from "../pages/settings";
+import { ProfilePage } from "../pages/profile";
 
 export function AppRouter() {
   return (
@@ -13,7 +13,8 @@ export function AppRouter() {
         <Route path="catalog" element={<CatalogPage />} />
         <Route path="catalog/:gameId" element={<GamePage />} />
         <Route path="explore" element={<ExplorePage />} />
-        <Route path="settings" element={<SettingsPage />} />
+        <Route path="explore/:gameId" element={<GamePage />} />
+        <Route path="profile" element={<ProfilePage />} />
       </Route>
     </Routes>
   );

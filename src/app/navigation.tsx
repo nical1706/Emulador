@@ -1,7 +1,7 @@
-import { Compass, Library, Settings } from "lucide-react";
+import { Compass, Library, User } from "lucide-react";
 import type { ReactNode } from "react";
 
-export type NavigationId = "catalog" | "explore" | "settings";
+export type NavigationId = "catalog" | "explore" | "profile";
 
 export type NavigationItem = {
   id: NavigationId;
@@ -27,10 +27,10 @@ export const navigationItems: NavigationItem[] = [
     icon: <Compass className="h-full w-auto p-2" strokeWidth={2} />,
   },
   {
-    id: "settings",
-    label: "Ajustes",
-    title: "Ajustes",
-    to: "/settings",
-    icon: <Settings className="h-full w-auto p-2" strokeWidth={2} />,
+    id: "profile",
+    label: "Perfil",
+    title: "Perfil",
+    to: "/profile",
+    icon: <User className="h-full w-auto p-2" strokeWidth={2} />,
   },
 ];
